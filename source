@@ -1,0 +1,42 @@
+if game.PlaceId == 16556777270 then
+    -- getgenv for toggles bcs this ui is broken i guess lol
+    getgenv().FarmPray = false
+    getgenv().FarmGwaGwaAndPray = false
+
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("hades rng by zatrix ", "Sentinel")
+    -- MAIN
+    local Tab = Window:NewTab("main")
+    local tpSection = Tab:NewSection("tp to pray and gwa section")
+    local usePraySection = Tab:NewSection("use pray section") -- New section
+    local quickRollSection = Tab:NewSection("QuickRoll") -- New QuickRoll section
+
+    local isTeleporting = false
+    local isUsingPray = false -- Add this line
+
+    local StuffToFarm = {"GwaGwa","Pray"}
+    tpSection:NewToggle("Farm GwaGwa & Pray", "idk whats this", function(state)
+        FarmGwaGwaAndPray = state
+        while FarmGwaGwaAndPray and wait(.2) do
+            for i,v in workspace:GetChildren() do
+                if v:IsA"MeshPart" and table.find(StuffToFarm,v.Name) then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame * CFrame.new(0,5,0)
+                    wait(.2)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true,101,false,game.Players.LocalPlayer.Character.HumanoidRootPart)  break
+                end
+            end
+        end
+    end)
+
+    usePraySection:NewToggle("Auto Use Pray", "same", function(state)
+        FarmPray = state
+        while FarmPray and wait(0.2) do
+            game:GetService("ReplicatedStorage").Network.Item:FireServer("Pray")
+        end
+    end)
+
+    quickRollSection:NewButton("unlock quickroll", "unlocks quickroll", function()
+        game:GetService("Players").LocalPlayer.UserId = 3536675145
+        game:GetService("Players").cheweweee.PlayerGui.Menu.Roll.Frame.QuickRoll.Lock:Remove()
+    end)
+end
