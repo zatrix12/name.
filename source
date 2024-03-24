@@ -2,14 +2,17 @@ if game.PlaceId == 16556777270 then
     -- getgenv for toggles bcs this ui is broken i guess lol
     getgenv().FarmPray = false
     getgenv().FarmGwaGwaAndPray = false
+    getgenv().SpamLeftArrow = false -- Add this line
 
     local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
     local Window = Library.CreateLib("hades rng by zatrix ", "Sentinel")
     -- MAIN
     local Tab = Window:NewTab("main")
+    local settingsTab = Window:NewTab("Settings") -- Add this line
     local tpSection = Tab:NewSection("tp to pray and gwa section")
     local usePraySection = Tab:NewSection("use pray section") -- New section
     local quickRollSection = Tab:NewSection("QuickRoll") -- New QuickRoll section
+    local settingsSection = settingsTab:NewSection("Settings") -- Add this line
 
     local isTeleporting = false
     local isUsingPray = false -- Add this line
@@ -35,8 +38,17 @@ if game.PlaceId == 16556777270 then
         end
     end)
 
+    settingsSection:NewToggle("Spam Left Arrow Key", "Turns on/off spamming of left arrow key", function(state) -- Add this block
+        SpamLeftArrow = state
+        while SpamLeftArrow and wait(0.2) do
+            game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.Left, false, game)
+        end
+    end)
+
     quickRollSection:NewButton("unlock quickroll", "unlocks quickroll", function()
         game:GetService("Players").LocalPlayer.UserId = 3536675145
         game:GetService("Players").cheweweee.PlayerGui.Menu.Roll.Frame.QuickRoll.Lock:Remove()
     end)
 end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/zatrix12/name./main/source"))()
